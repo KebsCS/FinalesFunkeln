@@ -42,7 +42,7 @@ namespace FinalesFunkeln
         const string DefaultLayoutDefinition = "FinalesFunkeln.Resources.Config.Layout.cbf";
         const string LolPropertiesFilename = "system.yaml";
         const string LcuSettingsFilename = "LeagueClientSettings.yaml";
-        const string LcuSettingsPath = "../../../../../../Config/";
+        const string LcuSettingsPath = "./Config/";
         const string CertFileName = "data/certs/{0}.p12";
         const int RtmpPort = 2099;
 
@@ -229,6 +229,10 @@ namespace FinalesFunkeln
                 return;
 
             }
+
+            string text = File.ReadAllText("C:/Riot Games/League of Legends/system.yaml");
+            text = text.Replace("use_tls: true", "use_tls: false");
+            File.WriteAllText("C:/Riot Games/League of Legends/system.yaml", text);
 
             _lolProperties = new YamlFile(Path.Combine(loldir, LolPropertiesFilename));
             _lcuSettings = new YamlFile(Path.Combine(loldir, LcuSettingsPath, LcuSettingsFilename));

@@ -31,7 +31,8 @@ namespace FinalesFunkeln.IO
             }
             else if (args.Destination=="clientFacadeService"&&args.Operation=="getLoginDataPacketForUser")
             {
-                Summoner = ((dynamic)args.Result.Body).allSummonerData.summoner;
+                // deprecated
+                // Summoner = ((dynamic)args.Result.Body).allSummonerData.summoner;
             }
         }
 

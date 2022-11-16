@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 using FinalesFunkeln.Controls.Attributes;
+using FinalesFunkeln.Util;
 using RtmpSharp.IO;
 using RtmpSharp.IO.AMF3;
 
@@ -38,7 +39,7 @@ namespace FinalesFunkeln.RiotObjects
             }
             set
             {
-                configs = Serializer.Deserialize<Dictionary<string, object>>(value);
+                configs = Serializer.Deserialize<Dictionary<string, object>>(Encoding.UTF8.GetString(Gzip.Decompress(Convert.FromBase64String(value))));
             }
         }
 
