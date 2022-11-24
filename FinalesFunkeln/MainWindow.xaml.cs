@@ -230,9 +230,9 @@ namespace FinalesFunkeln
 
             }
 
-            string text = File.ReadAllText("C:/Riot Games/League of Legends/system.yaml");
+            string text = File.ReadAllText(Path.Combine(loldir, LolPropertiesFilename));
             text = text.Replace("use_tls: true", "use_tls: false");
-            File.WriteAllText("C:/Riot Games/League of Legends/system.yaml", text);
+            File.WriteAllText(Path.Combine(loldir, LolPropertiesFilename), text);
 
             _lolProperties = new YamlFile(Path.Combine(loldir, LolPropertiesFilename));
             _lcuSettings = new YamlFile(Path.Combine(loldir, LcuSettingsPath, LcuSettingsFilename));
@@ -242,7 +242,7 @@ namespace FinalesFunkeln
             if (_rtmpAddress == null) return;
 
             _certificate = GetCertificate(_rtmpAddress);
-
+                
             if (_certificate == null)
             {
                 Dispatcher.Invoke(() => MessageBox.Show(this, "This program is not compatible with your region: " + _lolProperties["platformId"] + ".\n", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning));

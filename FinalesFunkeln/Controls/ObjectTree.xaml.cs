@@ -282,12 +282,15 @@ namespace FinalesFunkeln.Controls
             var g = element?.DataContext as PropertyObjectTreeViewItem ?? (sender as TreeViewItem)?.DataContext as PropertyObjectTreeViewItem;
 
             if (g == null) return;
-            string json = JsonConvert.SerializeObject(g.Element, Formatting.Indented);
+            string json = JsonConvert.SerializeObject(g.Element, Formatting.Indented, new JsonSerializerSettings
+            {
+                //TypeNameHandling = TypeNameHandling.All
+            });
 
             var fd = new SaveFileDialog();
             fd.AddExtension = true;
             fd.DefaultExt = ".json";
-            fd.Filter= "JSON file (.json)|*.json|Text file (.txt)|*.txt";
+            fd.Filter = "JSON file (.json)|*.json|Text file (.txt)|*.txt";
             fd.InitialDirectory = Directory.GetCurrentDirectory();
             fd.OverwritePrompt = true;
 
@@ -300,6 +303,23 @@ namespace FinalesFunkeln.Controls
                     str.Write(b, 0, b.Length);
                 }
             }
+        }
+
+        private void CopyClipboardJson_Click(object sender, RoutedEventArgs e)
+        {
+            var mi = sender as MenuItem;
+            var cm = mi?.CommandParameter as ContextMenu;
+            var element = cm?.PlacementTarget as FrameworkElement;
+            var g = element?.DataContext as PropertyObjectTreeViewItem ?? (sender as TreeViewItem)?.DataContext as PropertyObjectTreeViewItem;
+
+            if (g == null) return;
+            string json = JsonConvert.SerializeObject(g.Element, Formatting.Indented, new JsonSerializerSettings
+            {
+               // TypeNameHandling = TypeNameHandling.All
+            });
+
+            Clipboard.SetText(json);
+
         }
     }
 }
