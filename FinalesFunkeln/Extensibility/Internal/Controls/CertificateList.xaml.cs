@@ -77,6 +77,19 @@ namespace FinalesFunkeln.Extensibility.Internal.Controls
 
         private void CertificateList_OnInitialized(object sender, EventArgs e)
         {
+            DirectoryInfo d = new DirectoryInfo("data/certs/");
+
+            foreach (var file in d.GetFiles("*riotgames.com.p12"))
+            {
+                string oldName = file.FullName;
+                string newName = oldName.Replace("prod.", "feapp.").Replace("lol.riotgames.com", "lol.pvp.net");
+                if (!File.Exists(newName))
+                {
+                    File.Copy(oldName, newName);
+                }
+            }
+
+
             string[] files = Directory.GetFiles("data/certs/", "*.p12");
 
             X509Store store = new X509Store(StoreName.Root, StoreLocation.LocalMachine);
